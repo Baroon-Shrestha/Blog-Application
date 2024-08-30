@@ -5,6 +5,8 @@ import Login from "./Pages/Login";
 import SignUp from "./Pages/SignUp";
 import Nav from "./Components/Nav";
 import FlowNav from "./Components/FlowNav";
+import "flowbite/dist/flowbite.css";
+import { ParallaxProvider } from "react-scroll-parallax";
 
 function App() {
   return (
