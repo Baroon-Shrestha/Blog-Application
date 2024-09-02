@@ -1,40 +1,65 @@
-import React from "react";
+import React, { useState } from "react";
 import { IoMdSearch } from "react-icons/io";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { Link } from "react-router-dom";
+import { FaRegMoon } from "react-icons/fa";
 
 export default function Nav() {
+  const [active, setActive] = useState(false);
+
+  const toggleMenu = () => {
+    setActive(!active);
+  };
+
   return (
     <>
-      <div className="container mx-auto my-4 flex items-center justify-between">
-        <div className="font-bold text-xl">
-          <span className="p-1 rounded-md bg-logo font text-white ">
-            Blog's
-          </span>{" "}
-          spot
-        </div>
-        <div>
-          <form action="" className="flex items-center gap-4">
-            <input type="text" className="border border-black rounded-md" />
-            <button>
-              <IoMdSearch className="text-2xl" />
-            </button>
-          </form>
-        </div>
-        <div>
-          <ul className="flex gap-3 text-lg">
-            <li>popular</li>
-            <li>latest</li>
-            <li>latest 2</li>
-          </ul>
-        </div>
-        <div className="flex gap-4 text-xl font">
-          <button className="p-1 bg-primary font-bold rounded-md">
-            Sign In
-          </button>
-          <button className="p-1 bg-primary font-bold rounded-md">
-            Sign Up
-          </button>
+      <div>
+        <div className="container my-8 mx-auto flex items-center justify-between">
+          <div className="flex items-center gap-6">
+            <Link to="/">
+              <div className="font-bold text-xl">
+                <span className="p-1 rounded-md bg-green-500 text-white">
+                  Blog's
+                </span>{" "}
+                spot
+              </div>
+            </Link>
+            <div className="hidden md:flex gap-3">
+              <ul className="flex gap-3">
+                <li>Latest</li>
+                <li>Popular</li>
+                <li>Categories</li>
+              </ul>
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <div>
+              <FaRegMoon />
+            </div>
+            <div className="hidden md:flex items-center gap-3">
+              <div>Login</div>
+              <div>Sign up</div>
+            </div>
+            <div className="md:hidden">
+              <GiHamburgerMenu onClick={toggleMenu} />
+            </div>
+          </div>
         </div>
       </div>
+      {active && (
+        <div className="md:hidden flex flex-col text-center bg-white shadow-lg p-4">
+          <ul className="flex flex-col gap-2">
+            <li>Latest</li>
+            <li>Popular</li>
+            <li>Categories</li>
+          </ul>
+          <hr />
+          <div className="flex flex-col gap-2 mt-4">
+            <div>Login</div>
+            <div>Sign up</div>
+          </div>
+        </div>
+      )}
     </>
   );
 }
