@@ -19,6 +19,8 @@ export const signup = async (req, res) => {
 
     const newUser = await User.create({ username, email, password: hashedPass })
 
+    console.log(newUser)
+
     res.send({
         success: true,
         newUser
@@ -26,7 +28,7 @@ export const signup = async (req, res) => {
 }
 
 export const login = async (req, res) => {
-    const { email, password } = req.body
+    const { username, email, password } = req.body
 
     if (!email || !password) return res.send("you cannot leave any of these empty")
 
@@ -36,9 +38,11 @@ export const login = async (req, res) => {
 
     const pass = await bcrypt.compare(password, findUser.password)
 
+    console.log(`${findUser.username} logged in`)
+
     res.send({
         success: true,
-        message: "login success"
+        message: "login success",
     })
 
 }
