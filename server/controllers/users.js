@@ -1,48 +1,45 @@
+import { asyncErrorHandling } from "../middlewares/asyncErrorHandling.js"
+import { errorHandler } from "../middlewares/errorHandler.js"
 import { User } from "../models/userModel.js"
 import bcrypt from "bcrypt"
 
-export const getUsers = async (req, res) => {
-    const users = await User.find()
-
-    res.send({
+export const getUsers = asyncErrorHandling(async (req, res) => {
+    const users = await User.find();
+    res.status(200).json({
         success: true,
         users
-    })
-}
-export const signup = async (req, res) => {
+    });
+})
 
+
+export const signup = asyncErrorHandling(async (req, res, next) => {
     const { username, email, password } = req.body
 
-    if (!username || !email || !password) return res.send("you cannot leave any of these empty")
+    if (!username || !email || !password) return next(errorHandler(400, "you cannot leave any of these empty"))
 
     const hashedPass = bcrypt.hashSync(password, 10)
 
     const newUser = await User.create({ username, email, password: hashedPass })
 
-    console.log(newUser)
-
-    res.send({
+    res.status(201).json({
         success: true,
         newUser
     })
-}
+})
 
-export const login = async (req, res) => {
-    const { username, email, password } = req.body
+export const login = asyncErrorHandling(async (req, res, next) => {
+    const { email, password } = req.body
 
-    if (!email || !password) return res.send("you cannot leave any of these empty")
+    if (!email || !password) return next(errorHandler(400, "you cannot leave any of these empty"))
 
     const findUser = await User.findOne({ email })
 
-    if (!findUser) return res.send("user not found")
+    if (!findUser) return next(errorHandler(400, "user not found"))
 
     const pass = await bcrypt.compare(password, findUser.password)
 
-    console.log(`${findUser.username} logged in`)
-
-    res.send({
+    res.status(200).json({
         success: true,
         message: "login success",
     })
-
-}
+})

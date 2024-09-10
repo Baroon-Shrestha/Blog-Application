@@ -10,7 +10,7 @@ export const database = () => {
             console.log("connection successfull")
         })
         .catch((err) => {
-            console.log(err.message)
+            // console.log(err.message)
         })
 
 }
