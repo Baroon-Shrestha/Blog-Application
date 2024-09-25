@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { IoMdSearch } from "react-icons/io";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { FaRegMoon } from "react-icons/fa";
 
 export default function Nav() {
@@ -37,8 +37,12 @@ export default function Nav() {
               <FaRegMoon />
             </div>
             <div className="hidden md:flex items-center gap-3">
-              <div>Login</div>
-              <div>Sign up</div>
+              <div>
+                <Link to="/login">Login</Link>
+              </div>
+              <div>
+                <Link to="/signup">Sign up</Link>
+              </div>
             </div>
             <div className="md:hidden">
               <GiHamburgerMenu onClick={toggleMenu} />
@@ -55,8 +59,12 @@ export default function Nav() {
           </ul>
           <hr />
           <div className="flex flex-col gap-2 mt-4">
-            <div>Login</div>
-            <div>Sign up</div>
+            <div>
+              <Link to="/login">Login</Link>
+            </div>
+            <div>
+              <Link to="/signup">Sign up</Link>
+            </div>
           </div>
         </div>
       )}
